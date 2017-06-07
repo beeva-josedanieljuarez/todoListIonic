@@ -8,14 +8,14 @@ import { TodoModel } from '../shared/todo-model'
  * Angular Pipes.
  */
 @Pipe({
-  name: 'doneTodosPipe',
-  pure: false
+  name: 'doneTodosPipe'
 })
 export class DoneTodosPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
   transform(todos: TodoModel[]) {
-    return todos.filter(todo => todo.isDone)
+    console.log("done todos pipe");
+    return todos.filter(todo => todo.isDone);
   }
 }
