@@ -1,0 +1,33 @@
+page-todos {
+    .wairng{
+        color:red;
+    }
+
+    h3:first-child{
+        margin-top: 0.3em !important;
+    }
+
+    ion-list{
+        .item-block .item-inner{
+            border: none !important;
+        }
+
+        .item-block:last-child{
+            border: none !important;
+        }
+
+        .list-ios > .item-wrapper:last-child .item-block {
+        border-bottom: 0.55px solid #65435B !important;
+        }
+
+
+        .item-divider{
+            border: none !important;
+            padding-top: 10px;
+            background-color: transparent;
+            color: color($colors, light);
+            font-style: italic
+        }
+    }
+
+}
