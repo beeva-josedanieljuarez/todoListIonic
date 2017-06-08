@@ -12,6 +12,7 @@ import { AddTaskModalPage } from "../pages/add-task-modal/add-task-modal"
 import { TodoServiceProvider } from '../shared/todo-service';
 import { PrioritizedTodosPipe } from '../pipes/prioritized-todos';
 import { DoneTodosPipe } from '../pipes/done-todos';
+import { ListServiceProvider } from '../shared/list-service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DoneTodosPipe } from '../pipes/done-todos';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TodoServiceProvider
+    TodoServiceProvider,
+    ListServiceProvider
   ]
 })
 export class AppModule {}
