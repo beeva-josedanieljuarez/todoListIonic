@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { TodosPage } from '../todos/todos';
 
 import { ListServiceProvider } from '../../shared/list-service';
@@ -18,8 +18,10 @@ import { ListModel } from '../../shared/list-model';
 })
 export class ListsPage {
 
+  public selectedList:ListModel = null;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public listsService:ListServiceProvider) {
+    public listsService:ListServiceProvider, public loadingCtrl:LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -27,13 +29,18 @@ export class ListsPage {
   }
 
   goToList(list:ListModel){
+    this.clearSelectedList();
     this.navCtrl.push(TodosPage, {list});
   }
 
   addNewList(name:string){
-    let list = this.listsService.addList(name);
-    this.listsService.saveLocally();
-    this.goToList(list);
+    let loader = this.loadingCtrl.create();
+    loader.present();
+    this.listsService.addList(name)
+    .subscribe(list => {
+      this.goToList(list);
+      loader.dismiss();
+    }, error => {loader.dismiss();});
   }
 
   showAddList(){
@@ -54,13 +61,30 @@ export class ListsPage {
         {
           text: 'Add',
           handler: data =>{
-            this.addNewList(data.name);
+            {this.addNewList(data.name);}
           }
         }
-
       ]
     });
     addListAlert.present();
+  }
+
+  clearSelectedList(){
+    this.selectedList = null;
+  }
+
+  selectList(list:ListModel){
+    
+    if(this.selectedList == list){
+      this.clearSelectedList();
+    } else{ 
+      this.selectedList = list;
+    }
+  }
+
+  removeSelectedList(){
+    this.listsService.removeList(this.selectedList);
+    this.selectedList = null;
   }
 
 }
